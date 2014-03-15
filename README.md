@@ -2,4 +2,4 @@ dtts
 ====
 
 Report different versions on your multi-module maven project
-![Alt text](http://www.bk2.com.br/admin/fotos/The%20Forgotten%20Tales.jpg "Optional title")
+![Alt text](http://upload.wikimedia.org/wikipedia/en/1/1b/Bg_forgotten_tales.jpg "Optional title")
