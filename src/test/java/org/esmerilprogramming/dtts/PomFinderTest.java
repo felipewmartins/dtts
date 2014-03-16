@@ -24,6 +24,11 @@ import java.nio.file.Paths;
 
 import org.junit.Test;
 
+/**
+ * Test class PomFinderTest. 
+ * @author eprogramming
+ *
+ */
 public class PomFinderTest {
 
     @Test

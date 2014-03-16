@@ -33,7 +33,7 @@ public class PomFinder extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes bfa) throws IOException {
         if (path.endsWith("pom.xml")) {
-            System.out.println("Pom.xml found:" + path);
+            System.out.println(path);
         }
         return FileVisitResult.CONTINUE;
     }
