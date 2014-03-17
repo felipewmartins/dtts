@@ -17,9 +17,7 @@
 package org.esmerilprogramming.dtts;
 
 import java.io.IOException;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**
@@ -32,12 +30,15 @@ public class Dtts {
     public static void main(String[] args) {
         
         String ROOT = ".";
-        FileVisitor<Path> fileVisitor = new PomFinder();
+        PomFinder pomFinder = new PomFinder();
+        
         try {
-            Files.walkFileTree(Paths.get(ROOT), fileVisitor);
+            Files.walkFileTree(Paths.get(ROOT), pomFinder);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        System.out.println(pomFinder.getPoms());
         
     }
 }

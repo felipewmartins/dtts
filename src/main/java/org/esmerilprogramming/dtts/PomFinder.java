@@ -21,6 +21,8 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This a utility class to find all pom.xml files.
@@ -30,12 +32,26 @@ import java.nio.file.attribute.BasicFileAttributes;
  */
 public class PomFinder extends SimpleFileVisitor<Path> {
 
+    private List<Path> poms = new ArrayList<>();
+    
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes bfa) throws IOException {
-        if (path.endsWith("pom.xml")) {
-            System.out.println(path);
+        if (isValidPom(path)) {
+            poms.add(path);
         }
         return FileVisitResult.CONTINUE;
     }
+    
+    private boolean isValidPom(Path path) {
+        boolean valid = false;
+        if (path.endsWith("pom.xml") && !path.startsWith("./target")) {
+            valid = true;
+        }
+        return valid;
+    }
 
+    public List<Path> getPoms() {
+        return poms;
+    }
+    
 }
