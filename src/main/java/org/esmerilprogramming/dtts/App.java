@@ -53,8 +53,8 @@ public class App {
         
         Exporter.INSTANCE.printDepGroupArtifactVersion(DttsProcessor.INSTANCE.getDeps());
         Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
-        //Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-        //Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPluginsStrangers());
+        Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
+        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPluginsStrangers());
         
     }
     
