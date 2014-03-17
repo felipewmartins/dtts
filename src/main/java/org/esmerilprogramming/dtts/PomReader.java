@@ -17,33 +17,35 @@
 package org.esmerilprogramming.dtts;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Utility class to find all pom.xml files.
+ * Utility class to read all pom.xml files.
  * 
  * @author eprogramming
  * 
  */
-public class PomFinder extends SimpleFileVisitor<Path> {
+public class PomReader {
 
-    private List<Path> poms = new ArrayList<>();
+    private List<List<String>> allLines = new ArrayList<>();
     
-    @Override
-    public FileVisitResult visitFile(Path path, BasicFileAttributes bfa) throws IOException {
-        if (Validator.INSTANCE.isValidPom(path)) {
-            poms.add(path);
+    public List<List<String>> readAll(List<Path> poms) {
+        for (Path p : poms) {
+            try {
+                allLines.add(Files.readAllLines(p, StandardCharsets.UTF_8));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return FileVisitResult.CONTINUE;
+        return allLines;
     }
-    
-    public List<Path> getPoms() {
-        return poms;
+
+    public List<List<String>> getAllLines() {
+        return allLines;
     }
     
 }
