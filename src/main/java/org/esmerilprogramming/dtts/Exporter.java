@@ -33,9 +33,7 @@ public enum Exporter {
         System.out.println("Items type dependency found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
-            System.out.println(dtts.getGroup());
-            System.out.println(dtts.getArtifact());
-            System.out.println(dtts.getVersion());
+            System.out.println(dtts);
             System.out.println("------------------------------------------------------------------------");
         }
     }
@@ -44,9 +42,7 @@ public enum Exporter {
         System.out.println("Items type plugin found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
-            System.out.println(dtts.getGroup());
-            System.out.println(dtts.getArtifact());
-            System.out.println(dtts.getVersion());
+            System.out.println(dtts);
             System.out.println("------------------------------------------------------------------------");
         }
     }
@@ -55,22 +51,16 @@ public enum Exporter {
         System.out.println("Items type plugin strangers found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
-            System.out.println(dtts.getGroup());
-            System.out.println(dtts.getArtifact());
-            System.out.println(dtts.getVersion());
+            System.out.println(dtts);
             System.out.println("------------------------------------------------------------------------");
         }
     }
     
     public void printDepStrangersGroupArtifactVersion(Set<Dtts> dttsSet) {
-        
         System.out.println("Items type dep strangers found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
-            
-            System.out.println(dtts.getGroup());
-            System.out.println(dtts.getArtifact());
-            System.out.println(dtts.getVersion());
+            System.out.println(dtts);
             System.out.println("------------------------------------------------------------------------");
         }
     }

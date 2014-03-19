@@ -36,7 +36,8 @@ public class PomReader {
     public List<List<String>> readAll(List<Path> poms) {
         for (Path p : poms) {
             try {
-                allLines.add(Files.readAllLines(p, StandardCharsets.UTF_8));
+                List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
+                allLines.add(pomLines);
             } catch (IOException e) {
                 e.printStackTrace();
             }

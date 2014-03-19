@@ -16,6 +16,8 @@
  */
 package org.esmerilprogramming.dtts;
 
+import java.util.Comparator;
+
 
 /**
  * POJO Dtts.
@@ -23,7 +25,7 @@ package org.esmerilprogramming.dtts;
  * @author eprogramming
  * 
  */
-public class Dtts {
+public class Dtts implements Comparable<Dtts> {
 
     private String group;
     private String artifact;
@@ -99,5 +101,23 @@ public class Dtts {
             return false;
         return true;
     }
+    
+    @Override
+    public String toString() {
+        return group + ":" + artifact + ":" + version;
+    }
+
+    @Override
+    public int compareTo(Dtts o) {
+        return artifact.compareTo(o.getArtifact());
+    }
+    
+    public static final Comparator<Dtts> GroupComparator = new Comparator<Dtts>(){
+        @Override
+        public int compare(Dtts o1, Dtts o2) {
+            return o1.getGroup().compareTo(o2.getGroup());
+        }
+    };
+
     
 }

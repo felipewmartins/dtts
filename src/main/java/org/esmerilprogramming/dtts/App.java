@@ -52,9 +52,9 @@ public class App {
         DttsProcessor.INSTANCE.fillSet(pomReader.getAllLines());
         
         Exporter.INSTANCE.printDepGroupArtifactVersion(DttsProcessor.INSTANCE.getDeps());
-        Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
+//        Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
         Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPluginsStrangers());
+//        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPluginsStrangers());
         
     }
     
