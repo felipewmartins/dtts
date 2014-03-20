@@ -30,8 +30,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        String dirToScan = "/home/hf/java/projetos/tomeex";
-        //String dirToScan = ".";
+        //String dirToScan = "/home/hf/java/projetos/tomeex";
+        String dirToScan = ".";
 
         if (args.length > 0) {
             if (Validator.INSTANCE.isValidDir(args[0])) {
