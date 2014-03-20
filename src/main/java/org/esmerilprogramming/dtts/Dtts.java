@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,21 +17,22 @@
 package org.esmerilprogramming.dtts;
 
 /**
+ * <pre>
  * POJO Dtts.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public class Dtts {
 
     private String group;
     private String artifact;
     private String version;
-    
+
     public Dtts() {
-        
+
     }
-    
+
     public Dtts(String group, String artifact, String version) {
         this.group = group;
         this.artifact = artifact;
@@ -61,7 +62,7 @@ public class Dtts {
     public void setVersion(String version) {
         this.version = version;
     }
-    
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -103,5 +104,5 @@ public class Dtts {
     public String toString() {
         return group + ":" + artifact + ":" + version;
     }
-        
+
 }

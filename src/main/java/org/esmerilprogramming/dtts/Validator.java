@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,6 +36,13 @@ public enum Validator {
     private static final String COMMENT = "<!-";
     private static final String VERSION_DOT = "version.";
     
+    /**
+     * <pre>
+     * Checks if is a valid pom.xml
+     * @param path Path
+     * @return boolean
+     * </pre>
+     */
     public boolean isValidPom(Path path) {
         boolean valid = false;
         if (path.endsWith(POM) && !path.toString().contains(TARGET)) {
@@ -44,6 +51,13 @@ public enum Validator {
         return valid;
     }
     
+    /**
+     * <pre>
+     * Checks if is a valid directory to scan.
+     * @param path String
+     * @return boolean
+     * </pre>
+     */
     public boolean isValidDir(String path) {
         boolean valid = false;
         File f = new File(path);
@@ -55,6 +69,13 @@ public enum Validator {
         return valid;
     }
     
+    /**
+     * <pre>
+     * Check if object Dtts has correct values.
+     * @param dtts Dtts
+     * @return boolean
+     * </pre>
+     */
     public boolean isDttsCompleteAndValid(Dtts dtts) {
         boolean completeAndValid = false;
         if (dtts.getGroup() != null && dtts.getArtifact() != null && dtts.getVersion() != null) {
