@@ -18,7 +18,10 @@ package org.esmerilprogramming.dtts;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -38,17 +41,19 @@ public enum DttsProcessor {
     private static final String PLUGIN = "plugin";
     private static final String AT = "@";
 
-    private Set<Dtts> dttsSet = new LinkedHashSet<>();
     private List<Dtts> dttsList = new ArrayList<>();
 
     public void fillSet(List<List<String>> allPomLines) {
         Dtts dtts = new Dtts();
         for (List<String> pomLines : allPomLines) {
+
+            Collections.sort(pomLines);
+
             for (String s : pomLines) {
-                
+
                 if (s.contains(GROUP_ID)) {
                     dtts.setGroup(s.trim());
-                } else  if (s.contains(ARTIFACT_ID)) {
+                } else if (s.contains(ARTIFACT_ID)) {
                     dtts.setArtifact(s.trim());
                 } else if (s.contains(VERSION)) {
                     dtts.setVersion(s.trim());
@@ -60,18 +65,56 @@ public enum DttsProcessor {
                 }
             }
         }
+
+    }
+
+    public void fill(List<String> hulkPom) {
+        Dtts dtts = new Dtts();
+        for (String s : hulkPom) {
+            if (s.contains(GROUP_ID)) {
+                dtts.setGroup(s.trim());
+            } else if (s.contains(ARTIFACT_ID)) {
+                dtts.setArtifact(s.trim());
+            } else if (s.contains(VERSION)) {
+                dtts.setVersion(s.trim());
+            }
+            if (Validator.INSTANCE.isDttsCompleteAndValid(dtts)) {
+                dttsList.add(dtts);
+                dtts = new Dtts();
+            }
+        }
         
-        Collections.sort(dttsList, Dtts.GroupComparator);
+        Collections.sort(dttsList, new Comparator<Dtts>() {
+            @Override
+            public int compare(final Dtts d1, final Dtts d2) {
+                int x = d1.getGroup().compareTo(d2.getGroup());
+                if (x == 0) {
+                    x = d1.getArtifact().compareTo(d2.getArtifact());
+                }
+                return x;
+            }
+        });
+        
     }
 
     public Set<Dtts> getDeps() {
-        Set<Dtts> dttsTypeDep = new LinkedHashSet<>();
+        Set<Dtts> list = new HashSet<>();
         for (Dtts d : dttsList) {
             if (!d.getArtifact().contains(PLUGIN)) {
-                dttsTypeDep.add(d);
+                list.add(d);
             }
         }
-        return dttsTypeDep;
+        return list;
+    }
+    
+    public List<Dtts> getDepsList() {
+        List<Dtts> list = new LinkedList<>();
+        for (Dtts d : dttsList) {
+            if (!d.getArtifact().contains(PLUGIN)) {
+                list.add(d);
+            }
+        }
+        return list;
     }
 
     public Set<Dtts> getPlugins() {
@@ -83,58 +126,89 @@ public enum DttsProcessor {
         }
         return dttsTypePlug;
     }
-
-    public Set<Dtts> getPluginsStrangers() {
-
-        Set<Dtts> strangers = new LinkedHashSet<>();
-        String xFactor = "";
-        String xFactorFull = "";
-        
-        for (Dtts d : getPlugins()) {
-            
-            if (!(d.getGroup() + d.getArtifact()).equals(xFactor)) {
-                xFactor = (d.getGroup() + d.getArtifact());
-                xFactorFull = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
-            } else {
-
-                Dtts stranger = new Dtts(xFactorFull.split(AT)[0], xFactorFull.split(AT)[1], xFactorFull.split(AT)[2]);
-                strangers.add(stranger);
-
-                String other = d.getGroup() + AT + d.getArtifact() + AT + d.getVersion();
-                Dtts stranger2 = new Dtts(other.split(AT)[0], other.split(AT)[1], other.split(AT)[2]);
-                strangers.add(stranger2);
-
+    
+    public List<Dtts> getPluginsList() {
+        List<Dtts> list = new LinkedList<>();
+        for (Dtts d : dttsList) {
+            if (d.getArtifact().contains(PLUGIN)) {
+                list.add(d);
             }
         }
-
-        return strangers;
+        return list;
     }
 
     public Set<Dtts> getDepStrangers() {
+        
         Set<Dtts> strangers = new LinkedHashSet<>();
-        String xFactor = "";
-        String xFactorFull = "";
-        
-        Set<Dtts> dset = getDeps();
-        
-        for (Dtts d : dset) {
-
-            if (!(d.getGroup() + d.getArtifact()).equals(xFactor)) {
-                xFactor = (d.getGroup() + d.getArtifact());
-                xFactorFull = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
+        String y = ""; // will hold only group and artifact.
+        String x = ""; // dot not discard the first.
+        for (Dtts d : getDepsList()) {
+            if (!(d.getGroup() + d.getArtifact()).equals(y)) {
+                y = (d.getGroup() + d.getArtifact());
+                x = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
             } else {
-                
-                Dtts stranger = new Dtts(xFactorFull.split(AT)[0], xFactorFull.split(AT)[1], xFactorFull.split(AT)[2]);
+                // Add the first.
+                Dtts stranger = new Dtts(x.split(AT)[0], x.split(AT)[1], x.split(AT)[2]);
                 strangers.add(stranger);
-
-                String other = d.getGroup() + AT + d.getArtifact() + AT + d.getVersion();
-                Dtts stranger2 = new Dtts(other.split(AT)[0], other.split(AT)[1], other.split(AT)[2]);
-                strangers.add(stranger2);
-
+                // add other.
+                strangers.add(d);
             }
         }
-
-        return strangers;
+        
+        String z = ""; // will hold only group and artifact.
+        String k = ""; // dot not discard the first.
+        Set<Dtts> strangers2 = new LinkedHashSet<>();
+        for (Dtts d : strangers) {
+            if (!(d.getGroup() + d.getArtifact()).equals(z)) {
+                z = (d.getGroup() + d.getArtifact());
+                k = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
+            } else {
+                // Add the first.
+                Dtts stranger = new Dtts(k.split(AT)[0], k.split(AT)[1], k.split(AT)[2]);
+                strangers2.add(stranger);
+                // add other.
+                strangers2.add(d);
+            }
+        }
+        
+        return strangers2;
+    }
+    
+    public Set<Dtts> getPlugStrangers() {
+        
+        Set<Dtts> strangers = new LinkedHashSet<>();
+        String y = ""; // will hold only group and artifact.
+        String x = ""; // dot not discard the first.
+        for (Dtts d : getPluginsList()) {
+            if (!(d.getGroup() + d.getArtifact()).equals(y)) {
+                y = (d.getGroup() + d.getArtifact());
+                x = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
+            } else {
+                // Add the first.
+                Dtts stranger = new Dtts(x.split(AT)[0], x.split(AT)[1], x.split(AT)[2]);
+                strangers.add(stranger);
+                // add other.
+                strangers.add(d);
+            }
+        }
+        
+        String z = ""; // will hold only group and artifact.
+        String k = ""; // dot not discard the first.
+        Set<Dtts> strangers2 = new LinkedHashSet<>();
+        for (Dtts d : strangers) {
+            if (!(d.getGroup() + d.getArtifact()).equals(z)) {
+                z = (d.getGroup() + d.getArtifact());
+                k = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
+            } else {
+                // Add the first.
+                Dtts stranger = new Dtts(k.split(AT)[0], k.split(AT)[1], k.split(AT)[2]);
+                strangers2.add(stranger);
+                // add other.
+                strangers2.add(d);
+            }
+        }
+        
+        return strangers2;
     }
 
 }

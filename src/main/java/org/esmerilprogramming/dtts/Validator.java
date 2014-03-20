@@ -54,10 +54,8 @@ public enum Validator {
     public boolean isDttsCompleteAndValid(Dtts dtts) {
         boolean completeAndValid = false;
         if (dtts.getGroup() != null && dtts.getArtifact() != null && dtts.getVersion() != null) {
-            
-            // remove <!-- too.
-            
-            if (!dtts.getVersion().contains("${")) {
+            String dttsStr = dtts.toString();
+            if (!dttsStr.contains("${") && !dttsStr.contains("<!")) {
                 completeAndValid = true;
             }
         }

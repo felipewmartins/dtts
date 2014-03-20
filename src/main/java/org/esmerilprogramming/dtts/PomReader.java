@@ -33,6 +33,8 @@ public class PomReader {
 
     private List<List<String>> allLines = new ArrayList<>();
     
+    private List<String> allLinesHulkMode = new ArrayList<>();
+    
     public List<List<String>> readAll(List<Path> poms) {
         for (Path p : poms) {
             try {
@@ -44,9 +46,32 @@ public class PomReader {
         }
         return allLines;
     }
+    
+    /**
+     * Hulk POM !
+     * @param poms
+     * @return
+     */
+    public List<String> readAllHulkMode(List<Path> poms) {
+        for (Path p : poms) {
+            try {
+                List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
+                for (String s: pomLines) {
+                    allLinesHulkMode.add(s.trim());
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return allLinesHulkMode;
+    }
 
     public List<List<String>> getAllLines() {
         return allLines;
+    }
+
+    public List<String> getAllLinesHulkMode() {
+        return allLinesHulkMode;
     }
     
 }

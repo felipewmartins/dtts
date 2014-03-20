@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.esmerilprogramming</groupId>
     <artifactId>dtts</artifactId>
-    <version>1.0.0</version>
+    <version>0.0.9</version>
     <packaging>jar</packaging>
     <name>dtts</name>
 
@@ -58,13 +58,19 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.10</version>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cigarro</groupId>
+            <artifactId>marlboro</artifactId>
+            <version>4.89</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

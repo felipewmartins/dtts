@@ -30,7 +30,8 @@ public class App {
 
     public static void main(String[] args) {
 
-        String dirToScan = ".";
+        String dirToScan = "/home/hf/java/projetos/tomeex";
+        //String dirToScan = ".";
 
         if (args.length > 0) {
             if (Validator.INSTANCE.isValidDir(args[0])) {
@@ -47,14 +48,15 @@ public class App {
         }
 
         PomReader pomReader = new PomReader();
-        pomReader.readAll(pomFinder.getPoms());
+        pomReader.readAllHulkMode(pomFinder.getPoms());
         
-        DttsProcessor.INSTANCE.fillSet(pomReader.getAllLines());
+        //DttsProcessor.INSTANCE.fillSet(pomReader.getAllLines());
+        DttsProcessor.INSTANCE.fill(pomReader.getAllLinesHulkMode());
         
         Exporter.INSTANCE.printDepGroupArtifactVersion(DttsProcessor.INSTANCE.getDeps());
-//        Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
+        Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
         Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-//        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPluginsStrangers());
+        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
         
     }
     

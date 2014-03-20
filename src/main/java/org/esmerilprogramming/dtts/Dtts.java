@@ -16,16 +16,13 @@
  */
 package org.esmerilprogramming.dtts;
 
-import java.util.Comparator;
-
-
 /**
  * POJO Dtts.
  * 
  * @author eprogramming
  * 
  */
-public class Dtts implements Comparable<Dtts> {
+public class Dtts {
 
     private String group;
     private String artifact;
@@ -64,7 +61,7 @@ public class Dtts implements Comparable<Dtts> {
     public void setVersion(String version) {
         this.version = version;
     }
-
+    
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -101,23 +98,10 @@ public class Dtts implements Comparable<Dtts> {
             return false;
         return true;
     }
-    
+
     @Override
     public String toString() {
         return group + ":" + artifact + ":" + version;
     }
-
-    @Override
-    public int compareTo(Dtts o) {
-        return artifact.compareTo(o.getArtifact());
-    }
-    
-    public static final Comparator<Dtts> GroupComparator = new Comparator<Dtts>(){
-        @Override
-        public int compare(Dtts o1, Dtts o2) {
-            return o1.getGroup().compareTo(o2.getGroup());
-        }
-    };
-
-    
+        
 }

@@ -30,7 +30,7 @@ public enum Exporter {
     INSTANCE;
 
     public void printDepGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type dependency found: " + dttsSet.size());
+        System.out.println("Items type 'dependency' found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
             System.out.println(dtts);
@@ -39,7 +39,7 @@ public enum Exporter {
     }
     
     public void printPlugGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type plugin found: " + dttsSet.size());
+        System.out.println("Items type 'plugin' found: " + dttsSet.size());
         System.out.println("------------------------------------------------------------------------");
         for (Dtts dtts: dttsSet) {
             System.out.println(dtts);
