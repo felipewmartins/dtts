@@ -20,21 +20,25 @@ import java.io.File;
 import java.nio.file.Path;
 
 /**
- * Utility enum.
+ * <pre>
+ * Utility enum Validator.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public enum Validator {
 
     INSTANCE;
     
-    private static final String KEY_1 = "pom.xml";
-    private static final String KEY_2 = "target";
+    private static final String POM = "pom.xml";
+    private static final String TARGET = "target";
+    private static final String BRACE = "${";
+    private static final String COMMENT = "<!-";
+    private static final String VERSION_DOT = "version.";
     
     public boolean isValidPom(Path path) {
         boolean valid = false;
-        if (path.endsWith(KEY_1) && !path.toString().contains(KEY_2)) {
+        if (path.endsWith(POM) && !path.toString().contains(TARGET)) {
             valid = true;
         }
         return valid;
@@ -55,7 +59,7 @@ public enum Validator {
         boolean completeAndValid = false;
         if (dtts.getGroup() != null && dtts.getArtifact() != null && dtts.getVersion() != null) {
             String dttsStr = dtts.toString();
-            if (!dttsStr.contains("${") && !dttsStr.contains("<!")) {
+            if (dttsStr.indexOf(BRACE) < 0 && dttsStr.indexOf(COMMENT) < 0 && dttsStr.indexOf(VERSION_DOT) < 0) {
                 completeAndValid = true;
             }
         }

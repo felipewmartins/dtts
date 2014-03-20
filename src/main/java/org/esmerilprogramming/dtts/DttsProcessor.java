@@ -26,10 +26,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * <pre>
  * Utility enum with the main logic.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public enum DttsProcessor {
 
@@ -43,33 +44,9 @@ public enum DttsProcessor {
 
     private List<Dtts> dttsList = new ArrayList<>();
 
-    public void fillSet(List<List<String>> allPomLines) {
-        Dtts dtts = new Dtts();
-        for (List<String> pomLines : allPomLines) {
-
-            Collections.sort(pomLines);
-
-            for (String s : pomLines) {
-
-                if (s.contains(GROUP_ID)) {
-                    dtts.setGroup(s.trim());
-                } else if (s.contains(ARTIFACT_ID)) {
-                    dtts.setArtifact(s.trim());
-                } else if (s.contains(VERSION)) {
-                    dtts.setVersion(s.trim());
-                }
-
-                if (Validator.INSTANCE.isDttsCompleteAndValid(dtts)) {
-                    dttsList.add(dtts);
-                    dtts = new Dtts();
-                }
-            }
-        }
-
-    }
-
     public void fill(List<String> hulkPom) {
         Dtts dtts = new Dtts();
+        
         for (String s : hulkPom) {
             if (s.contains(GROUP_ID)) {
                 dtts.setGroup(s.trim());

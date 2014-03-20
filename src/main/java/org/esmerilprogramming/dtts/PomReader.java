@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,47 +31,33 @@ import java.util.List;
  */
 public class PomReader {
 
-    private List<List<String>> allLines = new ArrayList<>();
-    
-    private List<String> allLinesHulkMode = new ArrayList<>();
-    
-    public List<List<String>> readAll(List<Path> poms) {
-        for (Path p : poms) {
-            try {
-                List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
-                allLines.add(pomLines);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return allLines;
-    }
-    
+    private List<String> allLines = new ArrayList<>();
+
     /**
-     * Hulk POM !
-     * @param poms
-     * @return
+     * <pre>
+     * Iterates over list of Paths (pom.xml) files and save all lines of all 
+     * pom files on List<String>.
+     *  
+     * @param poms List<Path>
+     * @return List<String>
+     * </pre>
      */
-    public List<String> readAllHulkMode(List<Path> poms) {
+    public List<String> readPomLines(List<Path> poms) {
         for (Path p : poms) {
             try {
                 List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
-                for (String s: pomLines) {
-                    allLinesHulkMode.add(s.trim());
+                for (String s : pomLines) {
+                    allLines.add(s.trim());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return allLinesHulkMode;
-    }
-
-    public List<List<String>> getAllLines() {
         return allLines;
     }
 
-    public List<String> getAllLinesHulkMode() {
-        return allLinesHulkMode;
+    public List<String> getAllLines() {
+        return allLines;
     }
-    
+
 }

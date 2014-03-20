@@ -21,17 +21,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
+ * <pre>
  * The main class.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public class App {
 
     public static void main(String[] args) {
 
-        //String dirToScan = "/home/hf/java/projetos/tomeex";
-        String dirToScan = ".";
+        String dirToScan = "/home/hf/java/projetos/tomeex";
+        //String dirToScan = ".";
 
         if (args.length > 0) {
             if (Validator.INSTANCE.isValidDir(args[0])) {
@@ -48,15 +49,12 @@ public class App {
         }
 
         PomReader pomReader = new PomReader();
-        pomReader.readAllHulkMode(pomFinder.getPoms());
+        pomReader.readPomLines(pomFinder.getPoms());
         
-        //DttsProcessor.INSTANCE.fillSet(pomReader.getAllLines());
-        DttsProcessor.INSTANCE.fill(pomReader.getAllLinesHulkMode());
+        DttsProcessor.INSTANCE.fill(pomReader.getAllLines());
         
-        Exporter.INSTANCE.printDepGroupArtifactVersion(DttsProcessor.INSTANCE.getDeps());
-        Exporter.INSTANCE.printPlugGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugins());
         Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
+        //Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
         
     }
     
