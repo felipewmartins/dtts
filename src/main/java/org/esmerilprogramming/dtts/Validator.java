@@ -29,13 +29,13 @@ import java.nio.file.Path;
 public enum Validator {
 
     INSTANCE;
-    
+
     private static final String POM = "pom.xml";
     private static final String TARGET = "target";
     private static final String BRACE = "${";
     private static final String COMMENT = "<!-";
     private static final String VERSION_DOT = "version.";
-    
+
     /**
      * <pre>
      * Checks if is a valid pom.xml
@@ -50,7 +50,7 @@ public enum Validator {
         }
         return valid;
     }
-    
+
     /**
      * <pre>
      * Checks if is a valid directory to scan.
@@ -68,7 +68,7 @@ public enum Validator {
         }
         return valid;
     }
-    
+
     /**
      * <pre>
      * Check if object Dtts has correct values.
@@ -76,14 +76,26 @@ public enum Validator {
      * @return boolean
      * </pre>
      */
-    public boolean isDttsCompleteAndValid(Dtts dtts) {
-        boolean completeAndValid = false;
+    public boolean isDttsComplete(Dtts dtts) {
+        boolean complete = false;
         if (dtts.getGroup() != null && dtts.getArtifact() != null && dtts.getVersion() != null) {
-            String dttsStr = dtts.toString();
-            if (dttsStr.indexOf(BRACE) < 0 && dttsStr.indexOf(COMMENT) < 0 && dttsStr.indexOf(VERSION_DOT) < 0) {
-                completeAndValid = true;
-            }
+            complete = true;
         }
-        return completeAndValid;
+        return complete;
+    }
+
+    /**
+     * <pre>
+     * Check if tag is valid.
+     * @param tag String 
+     * @return boolean
+     * </pre>
+     */
+    public boolean isValidTag(String tag) {
+        boolean valid = false;
+        if (!tag.contains(BRACE) && !tag.contains(COMMENT) && !tag.contains(VERSION_DOT)) {
+            valid = true;
+        }
+        return valid;
     }
 }

@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,57 +16,37 @@
  */
 package org.esmerilprogramming.dtts;
 
-import java.util.List;
 import java.util.Set;
 
 /**
+ * <pre>
  * Utility enum to export results to file and console.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public enum Exporter {
 
     INSTANCE;
 
-    public void printDepGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type 'dependency' found: " + dttsSet.size());
-        System.out.println("------------------------------------------------------------------------");
-        for (Dtts dtts: dttsSet) {
-            System.out.println(dtts);
-            System.out.println("------------------------------------------------------------------------");
-        }
-    }
-    
-    public void printPlugGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type 'plugin' found: " + dttsSet.size());
-        System.out.println("------------------------------------------------------------------------");
-        for (Dtts dtts: dttsSet) {
-            System.out.println(dtts);
-            System.out.println("------------------------------------------------------------------------");
-        }
-    }
+    private static final String SEP  = "-----------------------------------------------------------------------------";
     
     public void printPlugStrangersGroupArtifactVersion(Set<Dtts> dttsSet) {
         System.out.println("Items type plugin strangers found: " + dttsSet.size());
-        System.out.println("------------------------------------------------------------------------");
+        System.out.println(SEP);
         for (Dtts dtts: dttsSet) {
             System.out.println(dtts);
-            System.out.println("------------------------------------------------------------------------");
+            System.out.println(SEP);
         }
     }
     
     public void printDepStrangersGroupArtifactVersion(Set<Dtts> dttsSet) {
         System.out.println("Items type dep strangers found: " + dttsSet.size());
-        System.out.println("------------------------------------------------------------------------");
+        System.out.println(SEP);
         for (Dtts dtts: dttsSet) {
             System.out.println(dtts);
-            System.out.println("------------------------------------------------------------------------");
+            System.out.println(SEP);
         }
-    }
-
-    public void exportGroupArtifactVersion(List<String> pomLines) {
-        System.out.println(pomLines);
     }
 
 }

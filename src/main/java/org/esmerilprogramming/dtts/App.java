@@ -51,10 +51,11 @@ public class App {
         PomReader pomReader = new PomReader();
         pomReader.readPomLines(pomFinder.getPoms());
         
-        DttsProcessor.INSTANCE.fill(pomReader.getAllLines());
+        DttsProcessor.INSTANCE.processDeps(pomReader.getDeps());
+        DttsProcessor.INSTANCE.processPlugins(pomReader.getPlugs());
         
         Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-        //Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
+        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
         
     }
     

@@ -24,14 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <pre>
  * Utility class to read all pom.xml files.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public class PomReader {
 
-    private List<String> allLines = new ArrayList<>();
+    private List<String> deps = new ArrayList<>();
+    private List<String> plugs = new ArrayList<>();
+
+    private static final int DEP = 1;
+    private static final int PLUG = 2;
 
     /**
      * <pre>
@@ -39,25 +44,73 @@ public class PomReader {
      * pom files on List<String>.
      *  
      * @param poms List<Path>
+     * </pre>
+     */
+    public void readPomLines(List<Path> poms) {
+        deps = readByType(poms, DEP);
+        plugs = readByType(poms, PLUG);
+    }
+
+    /**
+     * <pre>
+     * Fills a list with deps or plugins based on type parameter.
+     * @param poms List<Path> poms
+     * @param type int
      * @return List<String>
      * </pre>
      */
-    public List<String> readPomLines(List<Path> poms) {
+    private List<String> readByType(List<Path> poms, int type) {
+
+        List<String> list = new ArrayList<>();
+        String typeStart = "<plugin>";
+        String typeEnd = "</plugin>";
+        if (type == DEP) {
+            typeStart = "<dependency>";
+            typeEnd = "</dependency>";
+        }
+
         for (Path p : poms) {
             try {
                 List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
+                boolean valid = false;
+                boolean save = false;
                 for (String s : pomLines) {
-                    allLines.add(s.trim());
+
+                    String z = s.trim();
+
+                    if (z.equals(typeStart)) {
+                        valid = true;
+                    }
+
+                    if (valid) {
+                        if (z.contains("<groupId>") || z.contains("<artifactId>") || z.contains("<version>")) {
+                            save = true;
+                        }
+                        if (save) {
+                            list.add(z);
+                            save = false;
+                        }
+                    }
+
+                    if (z.equals(typeEnd)) {
+                        valid = false;
+                        save = false;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        return allLines;
+
+        return list;
     }
 
-    public List<String> getAllLines() {
-        return allLines;
+    public List<String> getDeps() {
+        return deps;
     }
 
+    public List<String> getPlugs() {
+        return plugs;
+    }
+    
 }

@@ -43,24 +43,30 @@ public class Dtts {
         return group;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroup(String g) {
+        g = g.replaceAll("<groupId>", "");
+        g = g.replaceAll("</groupId>", "");
+        this.group = g;
     }
 
     public String getArtifact() {
         return artifact;
     }
 
-    public void setArtifact(String artifact) {
-        this.artifact = artifact;
+    public void setArtifact(String a) {
+        a = a.replaceAll("<artifactId>", "");
+        a = a.replaceAll("</artifactId>", "");
+        this.artifact = a;
     }
 
     public String getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
-        this.version = version;
+    public void setVersion(String v) {
+        v = v.replaceAll("<version>", "");
+        v = v.replaceAll("</version>", "");
+        this.version = v;
     }
 
     @Override

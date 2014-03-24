@@ -19,9 +19,7 @@ package org.esmerilprogramming.dtts;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,32 +34,74 @@ public enum DttsProcessor {
 
     INSTANCE;
 
-    private static final String GROUP_ID = "/groupId";
-    private static final String ARTIFACT_ID = "/artifactId";
-    private static final String VERSION = "/version";
-    private static final String PLUGIN = "plugin";
+    private static final String GROUP_ID = "groupId";
+    private static final String ARTIFACT_ID = "artifactId";
+    private static final String VERSION = "version";
     private static final String AT = "@";
 
-    private List<Dtts> dttsList = new ArrayList<>();
-
-    public void fill(List<String> hulkPom) {
+    private List<Dtts> dttsDeps = new ArrayList<>();
+    private List<Dtts> dttsPlugs = new ArrayList<>();
+    
+    public void processDeps(List<String> deps) {
         Dtts dtts = new Dtts();
         
-        for (String s : hulkPom) {
-            if (s.contains(GROUP_ID)) {
-                dtts.setGroup(s.trim());
-            } else if (s.contains(ARTIFACT_ID)) {
-                dtts.setArtifact(s.trim());
-            } else if (s.contains(VERSION)) {
-                dtts.setVersion(s.trim());
-            }
-            if (Validator.INSTANCE.isDttsCompleteAndValid(dtts)) {
-                dttsList.add(dtts);
-                dtts = new Dtts();
+        for (String s : deps) {
+            
+            if (Validator.INSTANCE.isValidTag(s)) {
+                
+                if (s.contains(GROUP_ID)) {
+                    dtts.setGroup(s);
+                } else if (s.contains(ARTIFACT_ID)) {
+                    dtts.setArtifact(s);
+                } else if (s.contains(VERSION)) {
+                    dtts.setVersion(s);
+                }
+                
+                if (Validator.INSTANCE.isDttsComplete(dtts)) {
+                    dttsDeps.add(dtts);
+                    dtts = new Dtts();
+                }
+                
             }
         }
         
-        Collections.sort(dttsList, new Comparator<Dtts>() {
+        Collections.sort(dttsDeps, new Comparator<Dtts>() {
+            @Override
+            public int compare(final Dtts d1, final Dtts d2) {
+                int x = d1.getGroup().compareTo(d2.getGroup());
+                if (x == 0) {
+                    x = d1.getArtifact().compareTo(d2.getArtifact());
+                }
+                return x;
+            }
+        });
+        
+    }
+    
+    public void processPlugins(List<String> plugs) {
+        Dtts dtts = new Dtts();
+        
+        for (String s : plugs) {
+            
+            if (Validator.INSTANCE.isValidTag(s)) {
+                
+                if (s.contains(GROUP_ID)) {
+                    dtts.setGroup(s);
+                } else if (s.contains(ARTIFACT_ID)) {
+                    dtts.setArtifact(s);
+                } else if (s.contains(VERSION)) {
+                    dtts.setVersion(s);
+                }
+                
+                if (Validator.INSTANCE.isDttsComplete(dtts)) {
+                    dttsPlugs.add(dtts);
+                    dtts = new Dtts();
+                }
+                
+            }
+        }
+        
+        Collections.sort(dttsPlugs, new Comparator<Dtts>() {
             @Override
             public int compare(final Dtts d1, final Dtts d2) {
                 int x = d1.getGroup().compareTo(d2.getGroup());
@@ -74,52 +114,12 @@ public enum DttsProcessor {
         
     }
 
-    public Set<Dtts> getDeps() {
-        Set<Dtts> list = new HashSet<>();
-        for (Dtts d : dttsList) {
-            if (!d.getArtifact().contains(PLUGIN)) {
-                list.add(d);
-            }
-        }
-        return list;
-    }
-    
-    public List<Dtts> getDepsList() {
-        List<Dtts> list = new LinkedList<>();
-        for (Dtts d : dttsList) {
-            if (!d.getArtifact().contains(PLUGIN)) {
-                list.add(d);
-            }
-        }
-        return list;
-    }
-
-    public Set<Dtts> getPlugins() {
-        Set<Dtts> dttsTypePlug = new LinkedHashSet<>();
-        for (Dtts d : dttsList) {
-            if (d.getArtifact().contains(PLUGIN)) {
-                dttsTypePlug.add(d);
-            }
-        }
-        return dttsTypePlug;
-    }
-    
-    public List<Dtts> getPluginsList() {
-        List<Dtts> list = new LinkedList<>();
-        for (Dtts d : dttsList) {
-            if (d.getArtifact().contains(PLUGIN)) {
-                list.add(d);
-            }
-        }
-        return list;
-    }
-
     public Set<Dtts> getDepStrangers() {
         
         Set<Dtts> strangers = new LinkedHashSet<>();
         String y = ""; // will hold only group and artifact.
         String x = ""; // dot not discard the first.
-        for (Dtts d : getDepsList()) {
+        for (Dtts d : dttsDeps) {
             if (!(d.getGroup() + d.getArtifact()).equals(y)) {
                 y = (d.getGroup() + d.getArtifact());
                 x = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
@@ -156,7 +156,7 @@ public enum DttsProcessor {
         Set<Dtts> strangers = new LinkedHashSet<>();
         String y = ""; // will hold only group and artifact.
         String x = ""; // dot not discard the first.
-        for (Dtts d : getPluginsList()) {
+        for (Dtts d : dttsPlugs) {
             if (!(d.getGroup() + d.getArtifact()).equals(y)) {
                 y = (d.getGroup() + d.getArtifact());
                 x = (d.getGroup() + AT + d.getArtifact() + AT + d.getVersion());
