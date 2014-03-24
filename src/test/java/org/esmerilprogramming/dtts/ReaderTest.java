@@ -79,11 +79,11 @@ public class ReaderTest {
                         print = false;
                     }
 
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(50);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -123,11 +123,11 @@ public class ReaderTest {
                         print = false;
                     }
 
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        Thread.sleep(50);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
