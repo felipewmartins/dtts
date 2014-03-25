@@ -1,7 +1,7 @@
 dtts
 ====
 
-### Report different versions on your multi-module maven project.
+### Report different versions in your multi-module maven project.
 
 [Download](https://github.com/EsmerilProgramming/dtts/releases/download/1.3.0/dtts-1.3.0.jar)
 
