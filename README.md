@@ -62,10 +62,13 @@ com.sun.xml.messaging.saaj:saaj-impl:1.3.2
 com.sun.xml.messaging.saaj:saaj-impl:1.3.18 
 /complete_path_to_directory_of_your_multi_module_maven_project/project/module1/pom.xml - line 116
 -----------------------------------------------------------------------------
-commons-lang:commons-lang:2.6: 
+commons-lang:commons-lang:2.6
 /complete_path_to_directory_of_your_multi_module_maven_project/project/module3/pom.xml - line 1765
 -----------------------------------------------------------------------------
-commons-lang:commons-lang:2.4 found: 
+commons-lang:commons-lang:2.4 
 /complete_path_to_directory_of_your_multi_module_maven_project/project/module4/pom.xml - line 178
 -----------------------------------------------------------------------------
+
+...and continue
+
 ```
