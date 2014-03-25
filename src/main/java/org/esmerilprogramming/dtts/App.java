@@ -19,6 +19,7 @@ package org.esmerilprogramming.dtts;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Set;
 
 /**
  * <pre>
@@ -31,7 +32,7 @@ public class App {
 
     public static void main(String[] args) {
 
-        //String dirToScan = "/home/hf/java/projetos/tomeex";
+        // String dirToScan = "/home/hf/java/projetos/tomeex";
         String dirToScan = ".";
 
         if (args.length > 0) {
@@ -50,13 +51,19 @@ public class App {
 
         PomReader pomReader = new PomReader();
         pomReader.readPomLines(pomFinder.getPoms());
-        
+
         DttsProcessor.INSTANCE.processDeps(pomReader.getDeps());
         DttsProcessor.INSTANCE.processPlugins(pomReader.getPlugs());
+
+        Set<Dtts> deps = DttsProcessor.INSTANCE.getStrangersByType(PomReader.DEP);
+        Set<Dtts> plugs = DttsProcessor.INSTANCE.getStrangersByType(PomReader.PLUG);
+
+        Exporter.INSTANCE.printStrangers(deps, PomReader.DEP);
+        Exporter.INSTANCE.printStrangers(plugs, PomReader.PLUG);
         
-        Exporter.INSTANCE.printStrangers(DttsProcessor.INSTANCE.getStrangersByType(PomReader.DEP), PomReader.DEP);
-        Exporter.INSTANCE.printStrangers(DttsProcessor.INSTANCE.getStrangersByType(PomReader.PLUG), PomReader.PLUG);
+        Exporter.INSTANCE.grepMode(deps, pomFinder.getPoms(), PomReader.DEP);
+        Exporter.INSTANCE.grepMode(plugs, pomFinder.getPoms(), PomReader.PLUG);
         
     }
-    
+
 }

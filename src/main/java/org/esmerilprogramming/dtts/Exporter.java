@@ -16,6 +16,12 @@
  */
 package org.esmerilprogramming.dtts;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -53,6 +59,53 @@ public enum Exporter {
         for (Dtts dtts : dttsSet) {
             System.out.println(dtts);
             System.out.println(SEP);
+        }
+    }
+
+    /**
+     * <pre>
+     * Show files and lines.
+     * @param dttsSet Set<Dtts>
+     * @param poms List<Path>
+     * @param type int
+     * </pre>
+     */
+    public void grepMode(Set<Dtts> dttsSet, List<Path> poms, int type) {
+
+        System.out.println(TITLE);
+        System.out.println("Files and lines...");
+        System.out.println(TITLE);
+
+        Iterator<Dtts> it = dttsSet.iterator();
+        while (it.hasNext()) {
+            Dtts dtts = it.next();
+            for (Path p : poms) {
+                try {
+                    List<String> pomLines = Files.readAllLines(p, StandardCharsets.UTF_8);
+                    int line = 0;
+                    boolean valid = false;
+                    for (String s : pomLines) {
+                        line = line + 1;
+                        String z = s.trim();
+
+                        if (valid) {
+                            if (z.contains(dtts.getVersion())) {
+                                System.out.println(dtts);
+                                System.out.println(p.toFile().getAbsolutePath() + " - line " + line);
+                                System.out.println(SEP);
+                                valid = false;
+                            }
+                        }
+
+                        if (z.contains(dtts.getArtifact())) {
+                            valid = true;
+                        }
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 

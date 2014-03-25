@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.esmerilprogramming</groupId>
     <artifactId>dtts</artifactId>
-    <version>1.2.3</version>
+    <version>1.3.0</version>
     <packaging>jar</packaging>
     <name>dtts</name>
 
