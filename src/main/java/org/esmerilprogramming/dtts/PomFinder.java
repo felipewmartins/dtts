@@ -1,4 +1,4 @@
-/*
+/*-
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,15 +25,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <pre>
  * Utility class to find all pom.xml files.
  * 
  * @author eprogramming
- * 
+ * </pre>
  */
 public class PomFinder extends SimpleFileVisitor<Path> {
 
     private List<Path> poms = new ArrayList<>();
-    
+
     @Override
     public FileVisitResult visitFile(Path path, BasicFileAttributes bfa) throws IOException {
         if (Validator.INSTANCE.isValidPom(path)) {
@@ -41,9 +42,9 @@ public class PomFinder extends SimpleFileVisitor<Path> {
         }
         return FileVisitResult.CONTINUE;
     }
-    
+
     public List<Path> getPoms() {
         return poms;
     }
-    
+
 }

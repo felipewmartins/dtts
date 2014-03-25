@@ -35,6 +35,8 @@ public enum Validator {
     private static final String BRACE = "${";
     private static final String COMMENT = "<!-";
     private static final String VERSION_DOT = "version.";
+    private static final String DOT_VERSION = ".version";
+    
 
     /**
      * <pre>
@@ -93,7 +95,8 @@ public enum Validator {
      */
     public boolean isValidTag(String tag) {
         boolean valid = false;
-        if (!tag.contains(BRACE) && !tag.contains(COMMENT) && !tag.contains(VERSION_DOT)) {
+        if (!tag.contains(BRACE) && !tag.contains(COMMENT) 
+                && !tag.contains(VERSION_DOT) && !tag.contains(DOT_VERSION)) {
             valid = true;
         }
         return valid;

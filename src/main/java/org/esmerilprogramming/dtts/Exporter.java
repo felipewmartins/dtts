@@ -29,21 +29,28 @@ public enum Exporter {
 
     INSTANCE;
 
-    private static final String SEP  = "-----------------------------------------------------------------------------";
-    
-    public void printPlugStrangersGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type plugin strangers found: " + dttsSet.size());
-        System.out.println(SEP);
-        for (Dtts dtts: dttsSet) {
-            System.out.println(dtts);
-            System.out.println(SEP);
+    private static final String SEP = "-----------------------------------------------------------------------------";
+    private static final String TITLE = "#############################################################################";
+
+    /**
+     * <pre>
+     * Just send to default output console.
+     * @param dttsSet Set<Dtts>
+     * </pre>
+     */
+    public void printStrangers(Set<Dtts> dttsSet, int type) {
+
+        String message = "Dependencies ";
+        if (type == PomReader.PLUG) {
+            message = "Plugins ";
         }
-    }
-    
-    public void printDepStrangersGroupArtifactVersion(Set<Dtts> dttsSet) {
-        System.out.println("Items type dep strangers found: " + dttsSet.size());
+
+        System.out.println(TITLE);
+        System.out.println(message + "strangers found: " + dttsSet.size());
+        System.out.println(TITLE);
+
         System.out.println(SEP);
-        for (Dtts dtts: dttsSet) {
+        for (Dtts dtts : dttsSet) {
             System.out.println(dtts);
             System.out.println(SEP);
         }

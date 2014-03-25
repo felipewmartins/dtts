@@ -35,8 +35,8 @@ public class PomReader {
     private List<String> deps = new ArrayList<>();
     private List<String> plugs = new ArrayList<>();
 
-    private static final int DEP = 1;
-    private static final int PLUG = 2;
+    public static final int DEP = 1;
+    public static final int PLUG = 2;
 
     /**
      * <pre>
@@ -83,7 +83,7 @@ public class PomReader {
                     }
 
                     if (valid) {
-                        if (z.contains("<groupId>") || z.contains("<artifactId>") || z.contains("<version>")) {
+                        if (z.contains(DttsProcessor.GROUP_ID) || z.contains(DttsProcessor.ARTIFACT_ID) || z.contains(DttsProcessor.VERSION)) {
                             save = true;
                         }
                         if (save) {
@@ -112,5 +112,5 @@ public class PomReader {
     public List<String> getPlugs() {
         return plugs;
     }
-    
+
 }

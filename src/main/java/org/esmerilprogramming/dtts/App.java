@@ -1,4 +1,4 @@
-/*
+/* -
  * Copyright 2014 EsmerilProgramming
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -54,8 +54,8 @@ public class App {
         DttsProcessor.INSTANCE.processDeps(pomReader.getDeps());
         DttsProcessor.INSTANCE.processPlugins(pomReader.getPlugs());
         
-        Exporter.INSTANCE.printDepStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getDepStrangers());
-        Exporter.INSTANCE.printPlugStrangersGroupArtifactVersion(DttsProcessor.INSTANCE.getPlugStrangers());
+        Exporter.INSTANCE.printStrangers(DttsProcessor.INSTANCE.getStrangersByType(PomReader.DEP), PomReader.DEP);
+        Exporter.INSTANCE.printStrangers(DttsProcessor.INSTANCE.getStrangersByType(PomReader.PLUG), PomReader.PLUG);
         
     }
     
