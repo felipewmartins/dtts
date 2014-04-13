@@ -73,7 +73,11 @@ public enum Exporter {
     public void grepMode(Set<Dtts> dttsSet, List<Path> poms, int type) {
 
         System.out.println(TITLE);
-        System.out.println("Files and lines...");
+        if (type == PomReader.DEP) {
+            System.out.println("DEPENDENCIES: Files and lines...");    
+        } else {
+            System.out.println("PLUGINS: Files and lines...");
+        }
         System.out.println(TITLE);
 
         Iterator<Dtts> it = dttsSet.iterator();

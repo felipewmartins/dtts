@@ -62,7 +62,6 @@ public class App {
         
         Exporter.INSTANCE.grepMode(deps, pomFinder.getPoms(), PomReader.DEP);
         Exporter.INSTANCE.grepMode(plugs, pomFinder.getPoms(), PomReader.PLUG);
-        
     }
 
 }

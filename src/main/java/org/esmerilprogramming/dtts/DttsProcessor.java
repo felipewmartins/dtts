@@ -50,11 +50,8 @@ public enum DttsProcessor {
      */
     public void processDeps(List<String> deps) {
         Dtts dtts = new Dtts();
-
         for (String s : deps) {
-
             if (Validator.INSTANCE.isValidTag(s)) {
-
                 if (s.contains(GROUP_ID)) {
                     dtts.setGroup(s);
                 } else if (s.contains(ARTIFACT_ID)) {
