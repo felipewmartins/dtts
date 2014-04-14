@@ -16,6 +16,14 @@ println "Show information about git:"
 println "git status".execute().text
 println "Wow ! Let's try some more...Who i am ?"
 println "git config user.name".execute().text
+class Game {
+   def type = "action"
+   Game(t) {type = t}    
+}
+def g = new Game("shooter")
+println g.type
+levels = ['easy', 'medium', 'hard', 'expert']
+for (l in levels) println l
 
 
 
