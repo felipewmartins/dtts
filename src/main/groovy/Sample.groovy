@@ -24,6 +24,30 @@ def g = new Game("shooter")
 println g.type
 levels = ['easy', 'medium', 'hard', 'expert']
 for (l in levels) println l
+for (l = 'a'; l <= 'z'; l++) print l
+println '\nthis is cool.'
+for (l in 'a'..'z') print l
+println '\nthis is really cool.'
+env = ["java"]
+env << "groovy"
+env << "eclipse"
+env << "linux"
+println env
 
+class Soldier {
+    def shot() { println "Bang !" }   
+}
+class Bomberman {
+    def launch() { println "Booom !"}   
+}
+class Captain {
+    @Delegate Soldier s = new Soldier()
+    @Delegate Bomberman b = new Bomberman()
+}
 
+def cap = new Captain()
+cap.shot()
+cap.launch()
+
+println "delegate rocks"
 
